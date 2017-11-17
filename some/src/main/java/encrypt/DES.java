@@ -1,5 +1,6 @@
 package encrypt;
 
+import com.sun.crypto.provider.AESKeyGenerator;
 import org.apache.commons.lang3.StringUtils;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -9,6 +10,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -31,7 +33,7 @@ public class DES {
     /**
      * 定义加密方式
      */
-    private final static String KEY_DES = "DES";
+    private final static String KEY_DES = "DES"; // 定义 加密算法,可用 DES,DESede,Blowfish
     private final static String KEY_AES = "AES";    // 测试
 
     /**
@@ -90,11 +92,7 @@ public class DES {
 
             // 当使用其他对称加密算法时，如AES、Blowfish等算法时，用下述代码替换上述三行代码
 //            secretKey = new SecretKeySpec(key, KEY_DES);
-        } catch (InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return secretKey;
