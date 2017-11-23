@@ -1,5 +1,6 @@
 package encrypt;
 
+import org.apache.commons.codec.binary.Base64;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -263,6 +264,7 @@ public class RSA
      * @throws Exception
      */
     public static byte[] decryptBase64(String key) throws Exception {
+        ///return Base64.decodeBase64(key);
         return (new BASE64Decoder()).decodeBuffer(key);
     }
 
@@ -273,6 +275,7 @@ public class RSA
      * @throws Exception
      */
     public static String encryptBase64(byte[] key) throws Exception {
+        //return Base64.encodeBase64String(key);
         return (new BASE64Encoder()).encodeBuffer(key);
     }
 

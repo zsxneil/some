@@ -1,5 +1,7 @@
 package encrypt;
 
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.codec.digest.HmacUtils;
 import org.apache.commons.lang3.StringUtils;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -7,8 +9,14 @@ import sun.misc.BASE64Encoder;
 import javax.crypto.KeyGenerator;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
+import java.security.Provider;
+import java.security.Security;
+import java.security.spec.EncodedKeySpec;
+import java.security.spec.PKCS8EncodedKeySpec;
 
 /**
  * Created by Administrator on 2017/11/15.
@@ -26,7 +34,7 @@ public class HMAC {
      * HmacSHA512
      * </pre>
      */
-    private final static String KEY_MAC = "HmacMD5";
+    private final static String KEY_MAC = "HmacSHA256";
 
     /**
      * 全局数组
@@ -71,6 +79,7 @@ public class HMAC {
         try {
             KeyGenerator generator = KeyGenerator.getInstance(KEY_MAC);
             secretKey = generator.generateKey();
+            //System.out.println(secretKey.getEncoded());
             str = encryptBase64(secretKey.getEncoded());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -91,7 +100,7 @@ public class HMAC {
         byte[] bytes = null;
         try {
             secretKey = new SecretKeySpec(decryptBase64(key),KEY_MAC);
-            Mac mac = Mac.getInstance(secretKey.getAlgorithm());
+            Mac mac = Mac.getInstance(KEY_MAC);
             mac.init(secretKey);
             bytes = mac.doFinal(data);
         } catch (Exception e) {
@@ -142,10 +151,35 @@ public class HMAC {
         return sb.toString();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+
+        Provider[] providers = Security.getProviders();
+        for (Provider provider : providers) {
+            System.out.println(provider.getInfo());
+        }
+
         String key = HMAC.init();
+        //key = encryptBase64("".getBytes());
+        key = "123456";
+        byte[] result = decryptBase64(key);
+        System.out.println(new String(result));
+
         System.out.println("Mac密钥:\n" + key);
         String word = "123";
+        word = "{\"api_id\":101,\"api_key\":\"f7aff24c16\",\"api_secret\":\"KJUIHnjHUHlkhUHkjlplijjjKImhUIHlHUhugyGyftrDeseswS678m==\",\"p1\":\"123\",\"p2\":\"abc\",\"timestrap\":1503643692}";
         System.out.println(encryptHMAC(word, key));
+
+        System.out.println("****************************************");
+        String secret = "secret";
+        String message = "Message";
+
+        Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
+        SecretKeySpec secret_key = new SecretKeySpec(secret.getBytes(), "HmacSHA256");
+        sha256_HMAC.init(secret_key);
+
+        System.out.println(byteArrayToHexString(sha256_HMAC.doFinal(word.getBytes())));
+
+        String hash = HmacUtils.hmacSha256Hex(secret,message);
+        System.out.println(hash);
     }
 }
