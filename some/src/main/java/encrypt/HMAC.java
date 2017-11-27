@@ -170,16 +170,17 @@ public class HMAC {
         System.out.println(encryptHMAC(word, key));
 
         System.out.println("****************************************");
-        String secret = "secret";
-        String message = "Message";
-
+        String secret = "c94cd396702";
+        String message = "{\"action\":\"order_create\",\"api_id\":801,\"api_key\":\"c94cd396702\",\"api_secret\":\"Yzk1MGZhN2E1OWQ5ZmNmYTc0MjI5OTQ3NmY5OGNkMWI2Yjk5NjM5Mw==\",\"enddate\":\"2017-12-31\",\"partner_customer_id\":\"kingdee_cus_1\",\"partner_order_id\":\"kingdee_order_1\",\"purchase_cycle\":1,\"sku_id\":\"kingdee000001\",\"timestrap\":1511769027}";
+        message = "hello";
         Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
         SecretKeySpec secret_key = new SecretKeySpec(secret.getBytes(), "HmacSHA256");
         sha256_HMAC.init(secret_key);
 
-        System.out.println(byteArrayToHexString(sha256_HMAC.doFinal(word.getBytes())));
+        System.out.println(byteArrayToHexString(sha256_HMAC.doFinal(message.getBytes())));
 
         String hash = HmacUtils.hmacSha256Hex(secret,message);
+
         System.out.println(hash);
     }
 }

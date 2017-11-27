@@ -38,6 +38,13 @@ public class RSA
     private final static String KEY_RSA_PRIVATEKEY = "RSAPrivateKey";
 
     /**
+     * 全局数组
+     */
+    private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
+            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+
+
+    /**
      * 初始化密钥
      * @return
      */
@@ -264,7 +271,7 @@ public class RSA
      * @throws Exception
      */
     public static byte[] decryptBase64(String key) throws Exception {
-        ///return Base64.decodeBase64(key);
+        //return Base64.decodeBase64(key);
         return (new BASE64Decoder()).decodeBuffer(key);
     }
 
@@ -277,6 +284,35 @@ public class RSA
     public static String encryptBase64(byte[] key) throws Exception {
         //return Base64.encodeBase64String(key);
         return (new BASE64Encoder()).encodeBuffer(key);
+    }
+
+    /**
+     * 将一个字节转化成十六进制形式的字符串
+     * @param b 字节数组
+     * @return 字符串
+     */
+    private static String byteToHexString(byte b) {
+        int ret = b;
+        //System.out.println("ret = " + ret);
+        if (ret < 0) {
+            ret += 256;
+        }
+        int m = ret / 16;
+        int n = ret % 16;
+        return hexDigits[m] + hexDigits[n];
+    }
+
+    /**
+     * 转换字节数组为十六进制字符串
+     * @param bytes 字节数组
+     * @return 十六进制字符串
+     */
+    public static String byteArrayToHexString(byte[] bytes) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < bytes.length; i++) {
+            sb.append(byteToHexString(bytes[i]));
+        }
+        return sb.toString();
     }
 
     /**

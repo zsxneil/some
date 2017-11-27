@@ -2,6 +2,7 @@ package com.my.compress;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by Administrator on 2017/11/23.
