@@ -3,6 +3,9 @@ package com.my.multi.unit;
 import java.util.concurrent.Semaphore;
 
 /**
+ * 假若一个工厂有5台机器，但是有8个工人，
+ * 一台机器同时只能被一个工人使用，只有使用完了，
+ * 其他工人才能继续使用。那么我们就可以通过Semaphore来实现：
  * Created by neil on 2017/12/5.
  */
 public class SemaphoreDemo {

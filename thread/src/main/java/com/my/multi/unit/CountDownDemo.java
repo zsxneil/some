@@ -3,6 +3,12 @@ package com.my.multi.unit;
 import java.util.concurrent.CountDownLatch;
 
 /**
+ * 主线程就是调用线程，主线中设置了CountDownLatch的值为2，并启动两个线程，
+ * 每个线程执行完成之后将CountDownLatch减1，最后主线程中调用了latch.await()。
+ * 此时主线程就会等到CountDownLatch值为0时才能继续往下执行。
+ * 也是说，必须等到两个线程执行完成之后，才能执行。需要注意的是，
+ * 如果CountDownLatch设置的值大于2的话，那么主线程就会一直等待下去，
+ * 因为CountDownLatch的值即使减去2次，还是大于0，主线程只能一直等待。
  * Created by neil on 2017/12/5.
  */
 public class CountDownDemo {
