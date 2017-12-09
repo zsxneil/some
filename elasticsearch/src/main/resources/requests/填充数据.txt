@@ -1,0 +1,36 @@
+#创建索引
+#设置location的类型，否则地理查询时会报错
+PUT /schools
+{
+   "mappings":{
+      "school":{
+         "_all":{
+            "enabled":true
+         },
+
+         "properties":{
+            "location":{
+               "type":"geo_point"
+            }
+         }
+      }
+   }
+}
+
+#批量填充(必须按行操作，每个json转换成一行)
+POST /schools/_bulk
+{"index":{"_index":"schools","_type":"school","_id":"1"}}
+{"name":"CentralSchool","description":"CBSEAffiliation","street":"Nagan","city":"paprola","state":"HP","zip":"176115","location":[31.8955385,76.8380405],"fees":2000,"tags":["SeniorSecondary","beautifulcampus"],"rating":"3.5"}
+{"index":{"_index":"schools","_type":"school","_id":"2"}}
+{"name":"SaintPaulSchool","description":"ICSEAfiliation","street":"Dawarka","city":"Delhi","state":"Delhi","zip":"110075","location":[28.5733056,77.0122136],"fees":5000,"tags":["GoodFaculty","GreatSports"],"rating":"4.5"}
+{"index":{"_index":"schools","_type":"school","_id":"3"}}
+{"name":"CrescentSchool","description":"StateBoardAffiliation","street":"TonkRoad","city":"Jaipur","state":"RJ","zip":"176114","location":[26.8535922,75.7923988],"fees":2500,"tags":["Wellequippedlabs"],"rating":"4.5"}
+
+#再填充一个索引
+PUT /schools_gov
+
+POST /schools_gov/_bulk
+{"index":{"_index":"schools_gov","_type":"school","_id":"1"}}
+{"name":"ModelSchool","description":"CBSEAffiliation","street":"silkcity","city":"Hyderabad","state":"AP","zip":"500030","location":[17.3903703,78.4752129],"fees":200,"tags":["SeniorSecondary","beautifulcampus"],"rating":"3"}
+{"index":{"_index":"schools_gov","_type":"school","_id":"2"}}
+{"name":"GovernmentSchool","description":"StateBoardAffiliation","street":"Hinjewadi","city":"Pune","state":"MH","zip":"411057","location":[18.599752,73.6821995],"fees":500,"tags":["GreatSports"],"rating":"4"}

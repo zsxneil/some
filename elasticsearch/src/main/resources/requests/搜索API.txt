@@ -1,0 +1,5 @@
+#按字段搜索
+GET http://localhost:9200/_search?q=title:kill
+
+#多类型  可以在所有类型或某种指定类型的索引中搜索所有文档
+Get http://localhost:9200/schools/_search?q=tags:GreatSports

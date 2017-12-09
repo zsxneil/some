@@ -5,7 +5,10 @@
   <groupId>com.my</groupId>
   <artifactId>lucene</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    <modules>
+        <module>../elasticsearch</module>
+    </modules>
+    <packaging>pom</packaging>
 
   <name>lucene</name>
   <url>http://maven.apache.org</url>

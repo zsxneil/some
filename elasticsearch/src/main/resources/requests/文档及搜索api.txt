@@ -1,0 +1,100 @@
+#填充
+POST /schools/school/4
+{
+    "name":"City School", "description":"ICSE", "street":"West End", "city":"Meerut", 
+   "state":"UP", "zip":"250002", "location":[28.9926174, 77.692485], "fees":3500, 
+   "tags":["fully computerized"], "rating":"4.5"
+}
+
+#删除
+DELETE /schools/school/4
+
+#查询多个文档
+POST http://localhost:9200/_mget
+{
+   "docs":[
+      {
+         "_index": "schools", "_type": "school", "_id": "1"
+      },
+
+      {
+         "_index":"schools_gev", "_type":"school", "_id": "2"
+      }
+   ]
+}
+
+
+#按字段搜索
+GET http://localhost:9200/_search?q=title:kill
+
+#多类型  可以在所有类型或某种指定类型的索引中搜索所有文档
+Get http://localhost:9200/schools/_search?q=tags:GreatSports
+
+
+#聚合
+
+#平均聚合 此聚合用于获取聚合文档中存在的任何数字字段的平均值
+POST http://localhost:9200/schools/_search
+{
+    "aggs": {
+        "avg_fees": {
+            "avg": {
+                "field": "fees",
+                "missing": 0
+            }
+        }
+    }
+}
+
+#扩展统计聚合
+#此聚合生成聚合文档中特定数字字段的所有统计信息
+POST http://localhost:9200/schools/school/_search
+{
+    "aggs": {
+        "fees_stats": {
+            "extended_stats": {
+                "field": "fees"
+            }
+        }
+    }
+}
+
+#最大聚合
+POST http://localhost:9200/schools*/_search
+{
+    "aggs": {
+        "max_fees": {
+            "max": {
+                "field": "fees"
+            }
+        }
+    }
+}
+
+#最小聚合
+POST http://localhost:9200/schools*/_search
+{
+    "aggs": {
+        "max_fees": {
+            "min": {
+                "field": "fees"
+            }
+        }
+    }
+}
+
+#聚合元数据
+#可以通过使用元标记在请求时添加关于聚合的一些数据，并可以获得响应
+POST http://localhost:9200/school*/_search
+{
+    "aggs": {
+        "min_fees": {
+            "avg": {
+                "field": "fees"
+            },
+            "meta": {
+                "dsc": "Lowest Fees"
+            }
+        }
+    }
+}

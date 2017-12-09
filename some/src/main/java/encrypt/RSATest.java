@@ -18,7 +18,7 @@ public class RSATest {
         System.out.println("私钥： \n\r" + privateKey);
 
         System.out.println("私钥加密--------公钥解密");
-        String english = "{\"externalUserId\": \"20100819-00435\"}";
+        String english = "{\"externalUserId\": \"KH20100819-00435\"}";
         byte[] encEnglish = RSA.encryptByPrivateKey(english.getBytes("utf-8"), privateKey);
 
         System.out.println("加密前: " + english + "\n\r" + "加密后: " + Hex.encodeHexString(RSA.encryptBase64(encEnglish).getBytes("utf-8")));

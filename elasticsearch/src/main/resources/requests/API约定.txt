@@ -1,0 +1,29 @@
+#API约定
+
+#多索引
+POST http://localhost:9200/index1,index2,index3/_search
+
+#查询所有
+POST http://localhost:9200/_all/_search
+
+#通配符(*，+， - )
+POST http://localhost:9200/school*/_search
+{
+    "query": {
+        "query_string": {
+           "query": "GovernmentSchool"
+        }
+    }
+}
+
+#以“school”开头，但不是schools_gov
+POST http://localhost:9200/school*,-schools_gov /_search
+
+#忽略不存在的索引，否则会报错
+POST http://localhost:9200/school*,book_shops/_search?ignore_unavailable=true
+
+#如果带有通配符的网址没有索引，这个参数是true值时将防止错误。
+http://localhost:9200/schools_pri*/_search?allow_no_indices=true
+
+#可以通过将其添加到field_path参数中来过滤对较少字段的响应
+POST http://localhost:9200/school*,book_shops/_search?ignore_unavailable=true&pretty=true&filter_path=hits.total

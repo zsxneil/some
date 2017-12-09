@@ -1,0 +1,40 @@
+#新建索引时添加映射
+PUT http://localhost:9200/bankaccountdetails
+{
+    "mappings": {
+        "report": {
+            "_all": {
+                "enabled": true
+            },
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "date"
+                },
+                "balance": {
+                    "type": "double"
+                },
+                "liability": {
+                    "type": "double"
+                }
+            }
+        }
+    }
+}
+
+#嵌套数据类型的示例
+POST http://localhost:9200/tabletennis/team/1
+{
+   "group" : "players",
+   "user" : [
+      {
+         "first" : "dave", "last" : "jones"
+      },
+
+      {
+         "first" : "kevin", "last" : "morris"
+      }
+   ]
+}

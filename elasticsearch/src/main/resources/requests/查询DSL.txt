@@ -1,0 +1,107 @@
+#匹配所有查询
+POST /schools*/_search
+{
+    "query": {
+        "match_all": {}
+    }
+}
+
+#匹配查询
+POST http://localhost:9200/schools*/_search
+{
+   "query":{
+      "match" : {
+         "city":"pune"
+      }
+   }
+}
+
+#多字段匹配
+{
+   "query":{
+      "multi_match" : {
+         "query": "hyderabad",
+         "fields": [ "city", "state" ]
+      }
+   }
+}
+
+#字符串查询
+{
+   "query":{
+      "query_string": {
+         "query": "good faculty"
+      }
+   }
+}
+
+#期限等级查询
+#这些查询主要处理结构化数据，如数字，日期和枚举
+{
+   "query":{
+      "term":{"zip":"176115"}
+   }
+}
+
+#范围查询
+#此查询用于查找值的范围之间的值的对象。 为此，需要使用类似 -
+#gte − 大于和等于
+#gt − 大于
+#lte − 小于和等于
+#lt − 小于
+{
+   "query":{
+     "range": {
+        "rating": {
+           "gte":3.5
+        }
+     }
+   }
+}
+
+#类型查询（type）
+{
+   "query":{
+      "type" : {
+         "value" : "school"
+      }
+   }
+}
+
+#复合查询
+{
+   "query":{
+      "bool": {
+          "must":{
+              "match":{
+                  "state":"Delhi"
+              }
+          },
+          "filter":{
+              "range": {
+                 "rating": {
+                    "gte":3.5
+                 }
+              }
+          }
+      }
+   }
+}
+
+#地理位置查询
+POST http://localhost:9200/schools*/_search
+{
+   "query":{
+      "bool": {
+          "must" : {
+                "match_all" : {}
+            },
+          "filter":{
+              "geo_distance": {
+                    "distance":"100km",
+                    "location":[32.052098, 76.649294]
+                 }
+          }
+      }
+   }
+}

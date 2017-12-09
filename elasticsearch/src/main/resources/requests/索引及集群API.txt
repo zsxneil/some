@@ -1,0 +1,29 @@
+#索引api
+
+GET /schools
+POST http://localhost:9200/_analyze
+{
+   "analyzer" : "standard",
+   "text" : "you are reading this at YIIBAI point"
+}
+
+GET http://localhost:9200/schools/_stats
+
+GET http://localhost:9200/schools/_flush
+
+GET http://localhost:9200/schools/_refresh
+
+
+#集群API
+GET http://localhost:9200/_nodes/_local
+
+GET http://localhost:9200/_cluster/health
+
+GET http://localhost:9200/_cluster/nodes/stats
+
+GET http://localhost:9200/_cluster/pending_tasks
+
+GET http://localhost:9200/_nodes/stats
+
+GET http://localhost:9200/_nodes/hot_threads
+
