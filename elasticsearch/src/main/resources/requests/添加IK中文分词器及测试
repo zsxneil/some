@@ -1,0 +1,22 @@
+GET /_search
+
+#设置IK分词器之前需要先关闭所有索引，而且分词器的设置必须通过url设置，而不能在.yml文件中设置
+POST /movies/_close
+POST /schools/_close
+POST /schools_gov/_close
+
+PUT /_all/_settings?preserve_existing=true
+{
+  "index.analysis.analyzer.ik.alias.0" : "ik_analyzer",
+  "index.analysis.analyzer.ik.type" : "org.elasticsearch.index.analysis.IkAnalyzerProvider",
+  "index.analysis.analyzer.ik_max_word.type" : "ik",
+  "index.analysis.analyzer.ik_max_word.use_smart" : "false",
+  "index.analysis.analyzer.ik_smart.type" : "ik",
+  "index.analysis.analyzer.ik_smart.use_smart" : "true"
+}
+
+#中文必须url编码，以下两个请求分别测试ik_max模式和ik_smart模式
+GET /_analyze?pretty&analyzer=ik_max_word&text=%e8%81%94%e6%83%b3%e6%98%af%e5%85%a8%e7%90%83%e6%9c%80%e5%a4%a7%e7%9a%84%e7%ac%94%e8%ae%b0%e6%9c%ac%e5%8e%82%e5%95%86
+
+GET /_analyze?pretty&analyzer=ik_smart&text=%e8%81%94%e6%83%b3%e6%98%af%e5%85%a8%e7%90%83%e6%9c%80%e5%a4%a7%e7%9a%84%e7%ac%94%e8%ae%b0%e6%9c%ac%e5%8e%82%e5%95%86
+
