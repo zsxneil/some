@@ -20,3 +20,56 @@ GET /_analyze?pretty&analyzer=ik_max_word&text=%e8%81%94%e6%83%b3%e6%98%af%e5%85
 
 GET /_analyze?pretty&analyzer=ik_smart&text=%e8%81%94%e6%83%b3%e6%98%af%e5%85%a8%e7%90%83%e6%9c%80%e5%a4%a7%e7%9a%84%e7%ac%94%e8%ae%b0%e6%9c%ac%e5%8e%82%e5%95%86
 
+#填充数据测试
+#创建索引
+PUT /iktest
+{
+    "settings" : {
+        "analysis" : {
+            "analyzer" : {
+                "ik" : {
+                    "tokenizer" : "ik_max_word"
+                }
+            }
+        }
+    },
+    "mappings" : {
+        "article" : {
+            "dynamic" : true,
+            "properties" : {
+                "subject" : {
+                    "type" : "string",
+                    "analyzer" : "ik_max_word"
+                }
+            }
+        }
+    }
+}
+#填充数据
+POST /iktest/article/_bulk
+{ "index" : { "_id" : "1" } }
+{"subject" : "＂闺蜜＂崔顺实被韩检方传唤 韩总统府促彻查真相" }
+{ "index" : { "_id" : "2" } }
+{"subject" : "韩举行＂护国训练＂ 青瓦台:决不许国家安全出问题" }
+{ "index" : { "_id" : "3" } }
+{"subject" : "媒体称FBI已经取得搜查令 检视希拉里电邮" }
+{ "index" : { "_id" : "4" } }
+{"subject" : "村上春树获安徒生奖 演讲中谈及欧洲排外问题" }
+{ "index" : { "_id" : "5" } }
+{"subject" : "希拉里团队炮轰FBI 参院民主党领袖批其“违法”" }
+
+#查询测试
+POST /iktest/article/_search
+{
+    "query": {
+        "match": {
+           "subject": "希拉里希拉里和韩国"
+        }
+    },
+    "highlight": {
+        "pre_tags": ["<font color='red'>"],
+        "post_tags": ["</font>"],
+        "fields": {"subject":{}}
+    }
+}
+
