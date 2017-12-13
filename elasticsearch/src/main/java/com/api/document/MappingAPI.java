@@ -20,6 +20,58 @@ public class MappingAPI extends ClientBase{
 
     /**
      * 在mapping配置每个字段是否用ik中文分析器，可以提高效率
+     * 结果：
+     *
+     {
+         "index": {
+            "mappings": {
+                "type": {
+                    "properties": {
+                        "answer": {
+                            "type": "text",
+                            "analyzer": "ik_max_word"
+                        },
+                        "answer_author": {
+                            "type": "keyword"
+                        },
+                        "answer_date": {
+                            "type": "keyword"
+                        },
+                        "author": {
+                            "type": "keyword"
+                        },
+                        "category": {
+                            "type": "keyword"
+                        },
+                        "date": {
+                            "type": "keyword"
+                        },
+                        "description": {
+                            "type": "text",
+                            "analyzer": "ik_max_word"
+                        },
+                        "keywords": {
+                            "type": "keyword"
+                        },
+                        "list": {
+                            "type": "object"
+                        },
+                        "question": {
+                            "type": "text",
+                            "analyzer": "ik_max_word"
+                        },
+                        "read_count": {
+                            "type": "integer"
+                        },
+                        "title": {
+                            "type": "text",
+                            "analyzer": "ik_max_word"
+                        }
+                    }
+                }
+            }
+         }
+     }
      */
     @Test
     public void mappingTest(){
