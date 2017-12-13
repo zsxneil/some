@@ -1,4 +1,4 @@
-package com.api;
+package com.api.document;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.elasticsearch.action.index.IndexResponse;

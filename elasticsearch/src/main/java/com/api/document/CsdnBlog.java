@@ -1,4 +1,4 @@
-package com.api;
+package com.api.document;
 
 /**
  * Created by Administrator on 2017/12/11.
