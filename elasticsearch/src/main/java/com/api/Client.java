@@ -18,6 +18,11 @@ public class Client {
     static TransportClient client = null;
 
     public static void main(String[] args) throws UnknownHostException {
+        /**
+         * 这里的连接方式指的是没有安装x-pack插件,如果安装了x-pack则参考{@link ElasticsearchXPackClient}
+         * 1. java客户端的方式是以tcp协议在9300端口上进行通信
+         * 2. http客户端的方式是以http协议在9200端口上进行通信
+         */
         client = new PreBuiltTransportClient(Settings.EMPTY)
                 .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"),9300));
 

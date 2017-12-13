@@ -1,16 +1,22 @@
 package com.api.document;
 
+import org.apache.lucene.search.highlight.Highlighter;
 import org.elasticsearch.action.search.MultiSearchResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.text.Text;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.QueryParseContext;
 import org.elasticsearch.search.Scroll;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
@@ -21,7 +27,10 @@ import org.junit.Test;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/12/12.
@@ -114,6 +123,48 @@ public class SearchAPI {
         }
         System.out.println(nHits);
     }
+
+    /**
+     * 测试已经使用ik分析器创建的索引查询，以及高亮显示
+     */
+    @Test
+    public void ikTest(){
+        HighlightBuilder highlightBuilder = new HighlightBuilder()
+                .field("subject") //如果是所有字段，则使用 field("*")
+                .requireFieldMatch(true);
+        highlightBuilder.preTags("<font color='red'>");
+        highlightBuilder.postTags("</font>");
+
+        SearchResponse searchResponse = client
+        .prepareSearch("iktest")
+        .setQuery(QueryBuilders.matchQuery("subject","希拉里和韩国"))
+        .highlighter(highlightBuilder)
+        .get();
+
+        SearchHits hits = searchResponse.getHits();
+        for (SearchHit hit : hits){
+            List<String> highLights = new ArrayList<>();
+            Map<String,HighlightField> highlightFields = hit.getHighlightFields();
+            Map<String,Object> soucre = hit.getSource();
+            //处理高亮 获取高亮字符串,如果有多个高亮字段，需要将（自己关心的）字段都遍历
+            if (highlightFields != null && highlightFields.size() > 0) {
+                HighlightField highlightField = highlightFields.get("subject");
+                if (highlightField != null) {
+                    Text[] fragments = highlightField.fragments();
+                    if (fragments != null && fragments.length > 0) {
+                        StringBuffer name = new StringBuffer();
+                        for (Text text : fragments) {
+                            name.append(text);
+                        }
+                        soucre.put("subject", name.toString());
+                        highLights.add("subject:" + name.toString());
+                    }
+                }
+            }
+            System.out.println(soucre.toString());
+        }
+    }
+
     @After
     public void closeClient(){
         if (client != null){

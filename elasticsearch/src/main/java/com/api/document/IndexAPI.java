@@ -28,7 +28,7 @@ public class IndexAPI {
     @Before
     public void getClient() throws UnknownHostException {
         //设置集群名称
-        Settings settings = Settings.builder().put("cluster.name","my-application").build();
+        //Settings settings = Settings.builder().put("cluster.name","my-application").build();
         client = new PreBuiltTransportClient(Settings.EMPTY)
                 .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"),9300));
     }
@@ -44,7 +44,10 @@ public class IndexAPI {
                 "\"message\":\"Hell word\"" +
                 "}";
 
-        IndexResponse response = client.prepareIndex("fendo","fendodate").setSource(json).get();
+        IndexResponse response = client
+                .prepareIndex("fendo","fendodate")
+                .setSource(json)
+                .get();
         System.out.println(response.getResult());
     }
 
@@ -57,7 +60,6 @@ public class IndexAPI {
         json.put("user","kimchy");
         json.put("postDate",new Date());
         json.put("message", "trying out ElasticSearch");
-
         IndexResponse response = client.prepareIndex("fendo","fendodate").setSource(json).get();
         System.out.println(response.getResult());
     }
