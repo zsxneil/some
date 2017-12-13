@@ -1,15 +1,13 @@
 {
-  "settings": {
     "index": {
       "number_of_shards": "5",
+      "number_of_replicas": "1",
       "analysis": {
         "analyzer": {
           "ik": {
             "tokenizer": "ik_max_word"
           }
         }
-      },
-      "number_of_replicas": "1"
+      }
     }
-  }
 }
