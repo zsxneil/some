@@ -60,7 +60,6 @@ public abstract class BaseSearchService<E,ID extends Serializable,R extends Base
 
     public E getByKey(String fieldName,Object value){
         return repository.search(QueryBuilders.matchQuery(fieldName,value)).iterator().next();
-
     }
 
 }
