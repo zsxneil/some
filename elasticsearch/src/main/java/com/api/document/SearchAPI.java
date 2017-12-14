@@ -142,22 +142,26 @@ public class SearchAPI {
         .get();
 
         SearchHits hits = searchResponse.getHits();
+        String[] highlights = new String[]{"subject"};//定义需要高亮的字段
         for (SearchHit hit : hits){
             List<String> highLights = new ArrayList<>();
             Map<String,HighlightField> highlightFields = hit.getHighlightFields();
             Map<String,Object> soucre = hit.getSource();
             //处理高亮 获取高亮字符串,如果有多个高亮字段，需要将（自己关心的）字段都遍历
             if (highlightFields != null && highlightFields.size() > 0) {
-                HighlightField highlightField = highlightFields.get("subject");
-                if (highlightField != null) {
-                    Text[] fragments = highlightField.fragments();
-                    if (fragments != null && fragments.length > 0) {
-                        StringBuffer name = new StringBuffer();
-                        for (Text text : fragments) {
-                            name.append(text);
+                for (String highlight : highlights) {
+
+                    HighlightField highlightField = highlightFields.get(highlight);
+                    if (highlightField != null) {
+                        Text[] fragments = highlightField.fragments();
+                        if (fragments != null && fragments.length > 0) {
+                            StringBuffer buffer = new StringBuffer();
+                            for (Text text : fragments) {
+                                buffer.append(text);
+                            }
+                            soucre.put(highlight, buffer.toString());
+                            highLights.add(highlight + buffer.toString());
                         }
-                        soucre.put("subject", name.toString());
-                        highLights.add("subject:" + name.toString());
                     }
                 }
             }

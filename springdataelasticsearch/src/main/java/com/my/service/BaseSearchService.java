@@ -1,9 +1,10 @@
 package com.my.service;
 
-import com.my.respo.BaseSearchRepository;
+import com.my.base.BaseSearchRepository;
 import org.apache.log4j.Logger;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -11,6 +12,7 @@ import java.util.Optional;
 /**
  * Created by neil on 2017/12/13.
  */
+
 public abstract class BaseSearchService<E,ID extends Serializable,R extends BaseSearchRepository<E,ID>> {
     private  Logger logger = Logger.getLogger(this.getClass());
 
@@ -19,6 +21,17 @@ public abstract class BaseSearchService<E,ID extends Serializable,R extends Base
     public R getRepository() {
         return repository;
     }
+
+    public ElasticsearchTemplate getElasticsearchTemplate() {
+        return elasticsearchTemplate;
+    }
+
+    public void setElasticsearchTemplate(ElasticsearchTemplate elasticsearchTemplate) {
+        this.elasticsearchTemplate = elasticsearchTemplate;
+    }
+
+    @Autowired
+    private ElasticsearchTemplate elasticsearchTemplate;
 
     @Autowired
     public void setRepository(R repository) {
@@ -47,6 +60,7 @@ public abstract class BaseSearchService<E,ID extends Serializable,R extends Base
 
     public E getByKey(String fieldName,Object value){
         return repository.search(QueryBuilders.matchQuery(fieldName,value)).iterator().next();
+
     }
 
 }

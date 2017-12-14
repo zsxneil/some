@@ -63,7 +63,7 @@ POST /iktest/article/_search
 {
     "query": {
         "match": {
-           "subject": "希拉里希拉里和韩国"
+           "subject": "希拉里和韩国"
         }
     },
     "highlight": {

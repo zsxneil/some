@@ -18,8 +18,8 @@ public class Article implements Serializable {
     private String title;
     @Field(type = FieldType.text,analyzer = "ik_max_word")
     private String content;
-    @Field(type = FieldType.Date,store = true,format = DateFormat.custom,pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
+    @Field(type = FieldType.Date,store = true,format = DateFormat.custom,pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     private String releaseDate;
 
     public Integer getId() {
@@ -54,4 +54,13 @@ public class Article implements Serializable {
         this.releaseDate = releaseDate;
     }
 
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                '}';
+    }
 }
