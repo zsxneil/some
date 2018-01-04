@@ -5,10 +5,14 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.security.*;
 import java.security.interfaces.RSAPrivateCrtKey;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
@@ -63,6 +67,32 @@ public class RSA
             e.printStackTrace();
         }
         return map;
+    }
+
+    /**
+     * 从文件中加载私钥
+     *
+     * @param path
+     *            私钥文件名
+     * @return 是否成功
+     * @throws Exception
+     */
+    public static String loadPrivateKeyByFile(String path) throws Exception {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(path
+                    + "pri.key"));
+            String readLine = null;
+            StringBuilder sb = new StringBuilder();
+            while ((readLine = br.readLine()) != null) {
+                sb.append(readLine);
+            }
+            br.close();
+            return sb.toString();
+        } catch (IOException e) {
+            throw new Exception("私钥数据读取错误");
+        } catch (NullPointerException e) {
+            throw new Exception("私钥输入流为空");
+        }
     }
 
     /**

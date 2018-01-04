@@ -40,8 +40,8 @@ public class App {
     public void save(){
 
         Article article = new Article();
-        article.setId(2);
-        article.setTitle("这是第二个测试啊");
+        article.setId(3);
+        article.setTitle("这是第三个测试啊");
         article.setContent("希拉里团队炮轰FBI 参院民主党领袖批其“违法”");
         article.setReleaseDate(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         searchService.save(article);
