@@ -18,8 +18,6 @@ public class Main {
 
     public static final String OAUTH_CONSUMER_KEY = "500042526";
     public static final String OAUTH_CONSUMER_SECRET = "CsWbL8NUpmIKwFP1mwVq";
-//    public static final String OAUTH_CONSUMER_KEY = "500002413";
-//    public static final String OAUTH_CONSUMER_SECRET = "KSMForEAS";
     public static final String OAUTH_SIGNATURE_METHOD = "HMAC-SHA1";
     public static final float OAUTH_VERSION = 1.0f;
 
