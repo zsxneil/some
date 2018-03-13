@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--<include resource="org/springframework/boot/logging/logback/base.xml" />
+    <include resource="org/springframework/boot/logging/logback/file-appender.xml" />-->
+    <property name="type.name" value="redis-input" />
+    <property name="log.path" value="F:/logback/logback.log" />
+    <appender name="logstash" class="com.cwbase.logback.RedisAppender">
+        <source>spring-application</source>
+        <type>${type.name}</type>
+        <host>127.0.0.1</host>
+        <port>6379</port>
+        <key>logstash:redis</key>
+        <tags>test</tags>
+        <mdc>true</mdc>
+        <location>true</location>
+        <callerStackIndex>0</callerStackIndex>
+        <!--additionalField添加附加字段 用于head插件显示 -->
+        <additionalField>
+            <key>MyKey</key>
+            <value>MyValue</value>
+        </additionalField>
+        <additionalField>
+            <key>MySecondKey</key>
+            <value>MyOtherValue</value>
+        </additionalField>
+    </appender>
+    <!--输出到控制台-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+         <level>ERROR</level>
+        </filter>-->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--输出到文件-->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logback.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="logstash" />
+        <appender-ref ref="file" />
+        <appender-ref ref="console" />
+    </root>
+</configuration>
