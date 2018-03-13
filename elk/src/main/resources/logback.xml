@@ -7,7 +7,7 @@
     <appender name="logstash" class="com.cwbase.logback.RedisAppender">
         <source>spring-application</source>
         <type>${type.name}</type>
-        <host>127.0.0.1</host>
+        <host>192.168.1.103</host>
         <port>6379</port>
         <key>logstash:redis</key>
         <tags>test</tags>
