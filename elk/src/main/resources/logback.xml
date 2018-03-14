@@ -16,8 +16,8 @@
         <callerStackIndex>0</callerStackIndex>
         <!--additionalField添加附加字段 用于head插件显示 -->
         <additionalField>
-            <key>MyKey</key>
-            <value>MyValue</value>
+            <key>appname</key>
+            <value>springbootapp</value>
         </additionalField>
         <additionalField>
             <key>MySecondKey</key>
