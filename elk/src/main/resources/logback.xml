@@ -2,14 +2,15 @@
 <configuration>
     <!--<include resource="org/springframework/boot/logging/logback/base.xml" />
     <include resource="org/springframework/boot/logging/logback/file-appender.xml" />-->
+    <property resource="application.properties"/>
     <property name="type.name" value="redis-input" />
     <property name="log.path" value="F:/logback/logback.log" />
     <appender name="logstash" class="com.cwbase.logback.RedisAppender">
         <source>spring-application</source>
         <type>${type.name}</type>
-        <host>192.168.1.103</host>
-        <port>6379</port>
-        <key>logstash:redis</key>
+        <host>${elk.redis.host}</host>
+        <port>${elk.redis.port}</port>
+        <key>${elk.redis.key}</key>
         <tags>test</tags>
         <mdc>true</mdc>
         <location>true</location>
@@ -17,7 +18,7 @@
         <!--additionalField添加附加字段 用于head插件显示 -->
         <additionalField>
             <key>appname</key>
-            <value>springbootapp</value>
+            <value>${spring.application.name}</value>
         </additionalField>
         <additionalField>
             <key>MySecondKey</key>
