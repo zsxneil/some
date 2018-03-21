@@ -32,8 +32,13 @@ public class HomeController {
 
         log.info(user.toString());
         userService.testMdc();
-
-        //int i = 1/0;
+        try {
+            int i = 1/0;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            log.info("", e);
+        }
+        int i = 2/0;
         return user;
     }
 }
