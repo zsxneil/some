@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AccountService {
 
-    public static final String CLIENT_ID = "200198";
+    public static final String CLIENT_ID = "123";
     public static final String CLIENT_SECRET = "3682ad9fa1fb59419a229790cf415631";
 
     private static OkHttpClient client = null;
@@ -27,7 +27,7 @@ public class AccountService {
     @Test
     public void accountExist() throws IOException {
         String url = "https://api.kingdee.com/passport/account/exist";
-        String loginname = "18617096973";
+        String loginname = "123456";
         url = url + "?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&loginname=" + loginname;
         Request request = new Request
                 .Builder()
@@ -45,7 +45,7 @@ public class AccountService {
     @Test
     public void accountSearch() throws IOException {
         String url = "https://api.kingdee.com/passport/org/member/search?client_secret=%s&sclient_id=%s&keyword=%s&tid=%s";
-        String accountName = "17328752127";
+        String accountName = "123456";
         String tid = "533077";
         url = String.format(url, CLIENT_SECRET ,CLIENT_ID ,accountName, tid);
         System.out.println(url);
@@ -65,8 +65,8 @@ public class AccountService {
     @Test
     public void search() throws IOException {
         String url = "https://api.kingdee.com/kdproduct/member/search?client_secret=%s&client_id=%s&keyword=%s&tid=%s";
-        String accountName = "17328752127";
-        String tid = "5";
+        String accountName = "123456";
+        String tid = "555555";
         url = String.format(url, CLIENT_SECRET ,CLIENT_ID ,accountName, tid);
         System.out.println(url);
         Request request = new Request
