@@ -44,14 +44,6 @@ public class AppAuth2 {
         return sign;
     }
 
-    public static void main(String[] args) throws Exception {
-        String result = appAuth2Treaty(Main.OAUTH_CONSUMER_KEY, Main.OAUTH_CONSUMER_SECRET);
-        System.out.println(result);
-        String url = "http://do.yunzhijia.com/openauth2/api/appAuth2";
-        HttpHelperAsync.Headers headers = new HttpHelperAsync.Headers();
-        headers.put("authorization", result);
-        HttpHelperAsync.Response response = HttpHelperAsync.get(url, headers, null, 0);
-        System.out.println(response);
-    }
+
 
 }

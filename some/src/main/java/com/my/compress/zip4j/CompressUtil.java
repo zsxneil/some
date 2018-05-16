@@ -211,15 +211,15 @@ public class CompressUtil {
 	}
 
 	public static void main(String[] args) {
-		String result = zip("F:/vss中文", "F:/vss.zip", "11");
-		System.out.println(result);
-//		try {
-//			File[] files = unzip("d:\\test\\汉字.zip", "aa");
-//			for (int i = 0; i < files.length; i++) {
-//				System.out.println(files[i]);
-//			}
-//		} catch (ZipException e) {
-//			e.printStackTrace();
-//		}
+//		String result = zip("F:/vss中文", "F:/vss.zip", "11");
+//		System.out.println(result);
+		try {
+			File[] files = unzip("F:\\download\\1.zip", "aa");
+			for (int i = 0; i < files.length; i++) {
+				System.out.println(files[i]);
+			}
+		} catch (ZipException e) {
+			e.printStackTrace();
+		}
 	}
 }
