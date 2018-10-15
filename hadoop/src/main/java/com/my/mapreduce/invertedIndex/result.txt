@@ -1,0 +1,6 @@
+MapReduce      file1.txt:1;file2.txt:1;file3.txt:2;
+is        　　　　file1.txt:1;file2.txt:2;
+simple        　  file1.txt:1;file2.txt:1;
+powerful   　　 file2.txt:1;
+Hello       　　 file3.txt:1;
+bye       　　   file3.txt:1;

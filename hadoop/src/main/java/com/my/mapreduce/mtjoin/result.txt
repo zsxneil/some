@@ -1,0 +1,8 @@
+factoryname                    　　　　addressname
+Back of Beijing                    　　　　  Beijing
+Beijing Red Star                    　　　　Beijing
+Beijing Rising                    　　　　　 Beijing
+Guangzhou Development Bank          Guangzhou
+Guangzhou Honda                　　　　Guangzhou
+Shenzhen Thunder                　　　　Shenzhen
+Tencent                    　　　　　　　　Shenzhen
