@@ -15,6 +15,9 @@ public class AppTest
     @Test
     public void shouldAnswerWithTrue()
     {
-        assertTrue( true );
+        byte[] bytes = {1, 2, 3};
+        for (int i=0 ;i<bytes.length; i++) {
+            System.out.println(i == (bytes[i] - 1));
+        }
     }
 }

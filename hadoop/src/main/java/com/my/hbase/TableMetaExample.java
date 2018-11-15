@@ -10,7 +10,7 @@ import org.apache.hadoop.hbase.io.compress.Compression;
 
 import java.io.IOException;
 
-public class Example {
+public class TableMetaExample {
 
     private static final String TABLE_NAME = "hbase_study:MY_TABLE_NAME_TOO";
     private static final String CF_DEFAULT = "DEFAULT_COLUMN_FAMILY";
