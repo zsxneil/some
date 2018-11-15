@@ -14,6 +14,10 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * 本来计划写一个通过mysql binlog文件解析出某个表的sql语句，但是因为无法通过binlog文件获取到column name,放弃
+ * 后面研究通过增量方式的实时解析
+ */
 public class BinLogParser {
 
     private Map<Long, Map<String, Object>> tableMap = new HashMap<>();
@@ -49,6 +53,7 @@ public class BinLogParser {
         String database = tableMapEventData.getDatabase();
         String table = tableMapEventData.getTable();
         long tableId = tableMapEventData.getTableId();
+
         byte[] columnTypes = tableMapEventData.getColumnTypes();
         StringBuilder columnTypeBuilder = new StringBuilder();
         for (int i=0; i<columnTypes.length; i++) {
@@ -163,6 +168,8 @@ public class BinLogParser {
             return null;
         }
         System.out.println(deleteEventData.toString());
+
+
         return null;
     }
 
