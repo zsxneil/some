@@ -11,6 +11,7 @@ public class RedisUtil {
     private static final Logger log = LoggerFactory.getLogger(RedisUtil.class);
 
     // Redis服务器IP
+    //private static String ADDR = "172.20.69.35";
     private static String ADDR = "127.0.0.1";
 
     // Redis的端口号

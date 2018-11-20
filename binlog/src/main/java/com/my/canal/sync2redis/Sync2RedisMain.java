@@ -78,11 +78,14 @@ public class Sync2RedisMain {
                     redisDelete(rowData.getBeforeColumnsList(), entry.getHeader().getSchemaName(), entry.getHeader().getTableName());
                 } else if (eventType == CanalEntry.EventType.INSERT) {
                     redisInsert(rowData.getAfterColumnsList(), entry.getHeader().getSchemaName(), entry.getHeader().getTableName());
-                }else {
+                } else {
                     log.info("-------> before");
                     printColumn(rowData.getBeforeColumnsList());
-                    log.info("-------> after");
+                    log.info("-------> before <--------");
                     redisInsert(rowData.getAfterColumnsList(), entry.getHeader().getSchemaName(), entry.getHeader().getTableName()); //redis更新逻辑和插入逻辑一致
+                    log.info("-------> after");
+                    printColumn(rowData.getAfterColumnsList());
+                    log.info("-------> after <--------");
                 }
             }
         }
@@ -90,6 +93,7 @@ public class Sync2RedisMain {
 
     private static void printColumn(List<CanalEntry.Column> columns) {
         for (CanalEntry.Column column : columns) {
+            //rowData.getBeforeColumnsList()的column.getUpdated()全部为false;rowData.getAfterColumnsList()的column.getUpdated()才是实际是否有更改的标识
             log.info(column.getName() + " : " + column.getValue() + "    update=" + column.getUpdated());
         }
     }
