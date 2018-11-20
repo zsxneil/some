@@ -103,8 +103,8 @@ public class Sync2RedisMain {
         if (columns.size() > 0) {
             JSONObject json = new JSONObject();
             for (CanalEntry.Column column : columns) {
+                //此处应根据字段类型处理，如int型的转化为数字，日期型的转化为标准格式字符串。方便后续json转对象
                 json.put(column.getName(), column.getValue());
-
             }
             RedisUtil.stringSet(schemaName + ":" + tableName + ":" + columns.get(0).getValue(), json.toJSONString());
         }
