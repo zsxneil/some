@@ -20,59 +20,41 @@ public class ImgUtils {
 			String fileName = "certificate";
 			InputStream is = new FileInputStream(basePath + fileName + ".png");
 
-			//通过JPEG图象流创建JPEG数据流解码器
-
-//			JPEGImageDecoder jpegDecoder = JPEGCodec.createJPEGDecoder(is);
-
-			//解码当前JPEG数据流，返回BufferedImage对象
-
-//			BufferedImage buffImg = jpegDecoder.decodeAsBufferedImage();
 			BufferedImage buffImg = ImageIO.read(is);
 			//得到画笔对象
 			Graphics g = buffImg.getGraphics();
 			//创建你要附加的图象。
 			//2.jpg是你的小图片的路径
-			ImageIcon imgIcon = new ImageIcon(basePath + "1.jpg");
+			ImageIcon imgIcon = new ImageIcon(basePath + "certificate_cover.jpg");
 
 			//得到Image对象。
-
 			Image img = imgIcon.getImage();
 
 			//将小图片绘到大图片上。
-
 			//5,300 .表示你的小图片在大图片上的位置。
-
 			boolean result = g.drawImage(img,0,0,null);
 			System.out.println(result);
 
 			//设置颜色。
-
-			g.setColor(Color.white);
+			g.setColor(Color.red);
 
 			//最后一个参数用来设置字体的大小
-
 			Font f = new Font("微软雅黑",Font.PLAIN,100);
 
 			g.setFont(f);
 			//10,20 表示这段文字在图片上的位置(x,y) .第一个是你设置的内容。
-
-			g.drawString(lastName,40,120);
-			g.drawString("第二个",40,180);
+			g.drawString(lastName,300,500);
+			g.drawString("第二个",300,600);
 
 			g.dispose();
 
 			OutputStream os = new FileOutputStream(basePath+lastName.hashCode()+".png");
-			//创键编码器，用于编码内存中的图象数据。
-//			JPEGImageEncoder en = JPEGCodec.createJPEGEncoder(os);
 
-//			en.encode(buffImg);
 			ImageIO.write(buffImg, "PNG", os);
 			is.close();
-
 			os.close();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		} 	
@@ -85,5 +67,89 @@ public class ImgUtils {
 		createNamePhoto(basePath,lastName);
 	}
 
+	@Test
+	public void createCeritificateImg() throws IOException {
+		String basePath = "F:\\";
+		String fileName = "certificate";
+		InputStream is = new FileInputStream(basePath + "certificate.png");
+
+		BufferedImage buffImg = ImageIO.read(is);
+		//得到画笔对象
+		Graphics g = buffImg.getGraphics();
+		//创建你要附加的图象。
+		//2.jpg是你的小图片的路径
+		ImageIcon imgIcon = new ImageIcon(basePath + "certificate_cover.jpg");
+
+		//得到Image对象。
+		Image img = imgIcon.getImage();
+
+		String name = "刘伟斌";
+		String year = "2018";
+		String month = "9";
+		String trainProject = "EAS客户化开发训练营";
+		String ID = "510525199309150150";
+		String certificateNumber = "E06-201705-0000";
+
+		//将小图片绘到大图片上。
+		//5,300 .表示你的小图片在大图片上的位置。
+		boolean result = g.drawImage(img,0,0,null);
+		System.out.println(result);
+
+		//设置颜色。
+		g.setColor(Color.BLACK);
+
+		//最后一个参数用来设置字体的大小
+		Font f = new Font("华文楷体",Font.BOLD,42);
+		g.setFont(f);
+		//10,20 表示这段文字在图片上的位置(x,y) .第一个是你设置的内容。
+		g.drawString(name,360,625);
+		g.drawString(year,605,625);
+		g.drawString(month,810,625);
+		g.drawString(trainProject,330,700);
+
+		Font f1 = new Font("微软雅黑",Font.PLAIN,26);
+		g.setFont(f1);
+		g.drawString(ID,540,1062);
+		g.drawString(certificateNumber,540,1112);
+
+
+
+		g.dispose();
+
+		OutputStream os = new FileOutputStream(basePath+fileName.hashCode()+".png");
+
+		ImageIO.write(buffImg, "PNG", os);
+		is.close();
+		os.close();
+	}
+
+	public static Font getFont(String fontStyle, float fontSize) {
+		Font font = null;
+		FileInputStream fileInputStream = null;
+		String fontUrl = "";
+		try {
+			switch (fontStyle) {
+				case "楷体":
+					//文悦新青年体
+					fontUrl = "F:\\fonts\\simkai.ttf";
+					break;
+				default:
+					fontUrl = "F:\\fonts\\micross.ttf";
+					break;
+			}
+			fileInputStream = new FileInputStream(new File(fontUrl));
+			Font tempFont = Font.createFont(Font.TRUETYPE_FONT,fileInputStream);
+			font = tempFont.deriveFont(fontSize);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				fileInputStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return font;
+	}
 
 }
